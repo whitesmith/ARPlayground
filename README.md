@@ -1,3 +1,22 @@
+
+WS INTERACTIVE INSTALATION WALL
+================================
+The purpose of this repo is to create a canvas inside an AR element.
+Once that is possible, there will be several AR markers with a separate canvas in each one, so that together they make a huge canvas in which people can interact and play.
+<br>
+
+Current state
+================================
+On the debug.html and cam.js file I've managed to show a white canvas when shown the marker to the camera.
+The next steps are being able to switch cameras on mobile devices (<i>issue</i>), and being able to draw on the shown camera by click or touch.
+<br>
+
+
+Steps
+================================
+1 - Connecting the camera to the Js Library and showing a plain canvas <br>
+2 - Switching camera output on mobile devices(frontal or rear)<br>
+3 - Drawing on canvas with click or touch <br>
 4 - Saving the drawing to be able to continue on another session<br>
 5 - Aplying a colorpicker to choose line color<br>
 6 - Aplying a rubber to delete <br>
