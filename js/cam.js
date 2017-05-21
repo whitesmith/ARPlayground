@@ -3,17 +3,21 @@
 
 function onLoad() {
     console.log("bababa");
+
+
+    if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+    }
+
+
+    /*----------- VARIABLES ----------- */
+
     var mediaStream = null;
     var webcamList = [];
     var currentCam = null;
     var batata = false;
     var camera, canvas, context, imageData, pixels, detector;
     var debugImage, warpImage, homographyImage;
-
-
-    if (navigator.mediaDevices === undefined) {
-        navigator.mediaDevices = {};
-    }
 
     camera = document.getElementById("video");
     canvas = document.getElementById("canvas");
@@ -26,7 +30,7 @@ function onLoad() {
     canvas.height = parseInt(canvas.style.height);
     var video = document.getElementById('video');
 
-
+    /*----------- CONECTING CAMERA TO GETUSERMEDIA LIBRARY ----------- */
 
     if (navigator.mediaDevices.getUserMedia === undefined) {
         navigator.mediaDevices.getUserMedia = function (constraints) {
@@ -47,18 +51,9 @@ function onLoad() {
         }
     }
 
+
     document.getElementById('switch').addEventListener('click', nextWebCam, false);
 
-    /*
-                if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-                    navigator.mediaDevices.enumerateDevices().then(devicesCallback);
-                } else if (navigator.getUserMedia) {
-                    document.getElementById('tooltip').innerHTML = 'Cannot switch web cams because navigator.mediaDevices.enumerateDevices is unsupported by your browser.';
-                 navigator.getUserMedia({
-                        video: true }, successCallback, errorCallback);
-                
-                }
-    */
 
 
 
@@ -79,12 +74,14 @@ function onLoad() {
 
         if (webcamList.length > 1) {
             console.log(" > 1 ");
-            document.getElementById('switch').disabled = false;
+            document.getElementById('switch').disabled = false; //If more than 1 cam, enable switch button
             console.log(">1");
         }
 
 
     }
+
+    /*----------- SWITCH CAM BUTTON ----------- */
 
     $('.toggle').click(function () {
         batata = !batata;
@@ -115,6 +112,9 @@ function onLoad() {
 
     }, successCallback, errorCallback);
 
+
+
+    /*----------- SWITCH CAM FUNCTION ----------- */
 
     // nextWebCam() - Function to rotate through the webcam device list
     // 1. Release the current webcam (if there is one in use)
@@ -208,7 +208,7 @@ function onLoad() {
         navigator.mediaDevices.addEventListener('devicechange', deviceChanged);
     };
 
-
+    /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
 
     detector = new AR.Detector();
 
@@ -267,10 +267,11 @@ function onLoad() {
         for (i = 0; i !== markers.length; ++i) {
             corners = markers[i].corners;
 
-            context.rect(corners[0].x, corners[0].y, 200, 200);
+            context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
             context.fillStyle = "white";
             context.fill();
 
+            /*----------- DRAWING ON CANVAS ----------- */
 
             canvas.style.width = '';
             context.lineWidth = 20 || Math.ceil(Math.random() * 35);
@@ -360,7 +361,7 @@ function onLoad() {
         }
     }
 
-    function createImage(src, dst) {
+   /* function createImage(src, dst) {
         var i = src.data.length,
             j = (i * 4) + 3;
 
@@ -370,7 +371,7 @@ function onLoad() {
         }
 
         return dst;
-    };
+    };*/
 
 
 
