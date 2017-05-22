@@ -19,7 +19,8 @@ function onLoad() {
     var camera, canvas, context, imageData, pixels, detector;
     var debugImage, warpImage, homographyImage;
     var c = "",
-        n = "";
+        n = "",
+        ArEL = "";
 
     camera = document.getElementById("video");
     canvas = document.getElementById("canvas");
@@ -268,31 +269,32 @@ function onLoad() {
 
         for (i = 0; i !== markers.length; ++i) {
             corners = markers[i].corners;
-
-            context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
-            context.fillStyle = "white";
-            context.fill();
+            $('<div> id="canvasD" style="top:' + corners[0].x + '; left:' + corners[0].y + ' width:200px; height:200px; color:white;"'
+            }).appendTo($('<video>'); ArEL = $("#canvasD");
+            /*         context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
+            context.fillStyle = "white"; context.fill();*/
 
             /*----------- RECOG. CLICK ON CANVAS ----------- */
 
         }
     }
 
+
     function canvas() {
 
-        w = canvas.width;
-        h = canvas.height;
+        w = ArEL.width;
+        h = ArEL.height;
 
-        canvas.addEventListener("mousemove", function (e) {
+        ArEL.addEventListener("mousemove", function (e) {
             findxy('move', e)
         }, false);
-        canvas.addEventListener("mousedown", function (e) {
+        ArEL.addEventListener("mousedown", function (e) {
             findxy('down', e)
         }, false);
-        canvas.addEventListener("mouseup", function (e) {
+        ArEL.addEventListener("mouseup", function (e) {
             findxy('up', e)
         }, false);
-        canvas.addEventListener("mouseout", function (e) {
+        ArEL.addEventListener("mouseout", function (e) {
             findxy('out', e)
         }, false);
     }
@@ -303,8 +305,8 @@ function onLoad() {
         if (res == 'down') {
             prevX = currX;
             prevY = currY;
-            currX = e.clientX - canvas.offsetLeft;
-            currY = e.clientY - canvas.offsetTop;
+            currX = e.clientX - ArEL.offsetLeft;
+            currY = e.clientY - ArEL.offsetTop;
 
             flag = true;
             dot_flag = true;
@@ -323,8 +325,8 @@ function onLoad() {
             if (flag) {
                 prevX = currX;
                 prevY = currY;
-                currX = e.clientX - canvas.offsetLeft;
-                currY = e.clientY - canvas.offsetTop;
+                currX = e.clientX - ArEL.offsetLeft;
+                currY = e.clientY - ArEL.offsetTop;
                 draw();
             }
         }
@@ -379,7 +381,7 @@ function onLoad() {
 
     function save() {
         document.getElementById("canvasimg").style.border = "2px solid";
-        var dataURL = canvas.toDataURL();
+        var dataURL = ArEL.toDataURL();
         document.getElementById("canvasimg").src = dataURL;
         document.getElementById("canvasimg").style.display = "inline";
     }
