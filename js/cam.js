@@ -18,6 +18,8 @@ function onLoad() {
     var batata = false;
     var camera, canvas, context, imageData, pixels, detector;
     var debugImage, warpImage, homographyImage;
+    var c = "",
+        n = "";
 
     camera = document.getElementById("video");
     canvas = document.getElementById("canvas");
@@ -225,7 +227,7 @@ function onLoad() {
             var markers = detector.detect(imageData);
             //drawDebug();
             drawCorners(markers);
-            drawId(markers);
+            //drawId(markers);
         }
     }
 
@@ -271,107 +273,155 @@ function onLoad() {
             context.fillStyle = "white";
             context.fill();
 
-            /*----------- DRAWING ON CANVAS ----------- */
-
-            canvas.style.width = '';
-            context.lineWidth = 20 || Math.ceil(Math.random() * 35);
-            context.lineCap = 20 || "round";
-            context.pX = undefined;
-            context.pY = undefined;
-            var lines = [, , ];
-            var offset = $(canvas).offset();
-            var self = {
-                init: function () {
-                    canvas.addEventListener('touchstart', self.preDraw, false);
-                    canvas.addEventListener('touchmove', self.draw, false);
-                },
-                preDraw: function (event) {
-                    $.each(event.touches, function (i, touch) {
-                        var id = touch.identifier,
-                            colors = ["red", "green", "yellow", "blue", "magenta", "orange", "red"],
-                            mycolor = colors[Math.floor(Math.random() * colors.length)];
-                        lines[id] = {
-                            lineX: this.pageX - offset.left,
-                            lineY: this.pageY - offset.top,
-                            color: mycolor
-                        };
-                    });
-                    event.preventDefault();
-                },
-                draw: function (event) {
-                    var e = event,
-                        hmm = {};
-                    $.each(event.touches, function (i, touch) {
-                        var id = touch.identifier,
-                            moveX = this.pageX - offset.left - lines[id].lineX,
-                            moveY = this.pageY - offset.top - lines[id].lineY;
-                        var ret = self.move(id, moveX, moveY);
-                        lines[id].x = ret.x;
-                        lines[id].y = ret.y;
-                    });
-
-
-
-                    event.preventDefault();
-                },
-                move: function (i, changeX, changeY) {
-                    context.strokeStyle = lines[i].color;
-                    context.beginPath();
-                    context.moveTo(lines[i].x, lines[i].y);
-                    context.lineTo(lines[i].x + changeX, lines[i].y + changeY);
-                    context.stroke();
-                    context.closePath();
-                    return {
-                        x: lines[i].x + changeX,
-                        y: lines[i].y + changeY
-                    };
-                }
-            };
-            return self.init();
-
-
-
-
-
-
+            /*----------- RECOG. CLICK ON CANVAS ----------- */
 
         }
     }
 
-    function drawId(markers) {
-        var corners, corner, x, y, i, j;
+    function canvas() {
 
-        context.strokeStyle = "blue";
-        context.lineWidth = 1;
+        w = canvas.width;
+        h = canvas.height;
 
-        for (i = 0; i !== markers.length; ++i) {
-            corners = markers[i].corners;
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
 
-            x = Infinity;
-            y = Infinity;
+    /*----------- FIND CLICK ON CANVAS ----------- */
 
-            for (j = 0; j !== corners.length; ++j) {
-                corner = corners[j];
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
 
-                x = Math.min(x, corner.x);
-                y = Math.min(y, corner.y);
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
             }
-
-            context.strokeText(markers[i].id, x, y)
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
         }
     }
 
-   /* function createImage(src, dst) {
-        var i = src.data.length,
-            j = (i * 4) + 3;
 
-        while (i--) {
-            dst.data[j -= 4] = 255;
-            dst.data[j - 1] = dst.data[j - 2] = dst.data[j - 3] = src.data[i];
+    /*----------- CHANGE COLOR W/COLOR PICKER ----------- */
+
+
+
+
+    $('#white').click(function () {
+        c = "white";
+        n = 30;
+        $('#white').html("Rubber activated");
+    });
+
+    $('#chosenColor').click(function () {
+        $('#white').html("");
+        // console.log("do");
+        c = "#" + document.getElementById("chosenColor").value;
+        //console.log(c);
+        // console.log(document.getElementById("chosenColor").value);
+
+        n = 10;
+
+    });
+
+
+    /*----------- DRAWING  ON CANVAS ----------- */
+
+    function draw() {
+        context.beginPath();
+        context.moveTo(prevX, prevY);
+        context.lineTo(currX, currY);
+        context.strokeStyle = c;
+        context.lineWidth = n;
+        context.stroke();
+        context.closePath();
+    }
+
+    /*----------- ERASING DRAWING ----------- */
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
         }
+    }
 
-        return dst;
-    };*/
+    /*----------- SAVING DRAWING ----------- */
+
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+
+
+
+    /*----------- DRAWING MARKER ID ----------- */
+    /*
+        function drawId(markers) {
+            var corners, corner, x, y, i, j;
+
+            context.strokeStyle = "blue";
+            context.lineWidth = 1;
+
+            for (i = 0; i !== markers.length; ++i) {
+                corners = markers[i].corners;
+
+                x = Infinity;
+                y = Infinity;
+
+                for (j = 0; j !== corners.length; ++j) {
+                    corner = corners[j];
+
+                    x = Math.min(x, corner.x);
+                    y = Math.min(y, corner.y);
+                }
+
+                context.strokeText(markers[i].id, x, y)
+            }
+        }*/
+
+    /* function createImage(src, dst) {
+         var i = src.data.length,
+             j = (i * 4) + 3;
+
+         while (i--) {
+             dst.data[j -= 4] = 255;
+             dst.data[j - 1] = dst.data[j - 2] = dst.data[j - 3] = src.data[i];
+         }
+
+         return dst;
+     };*/
 
 
 

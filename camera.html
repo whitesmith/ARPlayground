@@ -12,72 +12,39 @@
     <title>AR Playground</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="lib/jquery-2.0.2.min.js"></script>
+    
+
+   <!-- <script type="text/javascript" src="lib/jquery-2.0.2.min.js"></script>-->
     <script src="lib/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <script type="text/javascript" src="lib/webrtc_adapter.js"></script> 
+    
+    
+    
 </head>
 
 <body>
-    <!--[if lt IE 8]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <div class="container">
 
 
-            <!--   <div id="sketchpadapp">
-        <style media="screen">
-            canvas {
-                border: 10px solid pink
-            }
-        </style>
-        
-        <canvas id="sketchpad"></canvas>
-    </div>
--->
-
-            <div class="demo-area">
 
                 <div class="view--video">
                     <video id="videoTag" src="" autoplay muted class="view--video__video"></video>
                 </div>
 
+ 
 
                 <div class="alert--error alert" class="hide" id="tooltip"></div>
                 <button class="btn btn-default" type="button" disabled id="switch"> Switch Cameras </button>
                 <button type="button" class="toggle"> Pause </button>
 
-            </div>
-        </div>
-    </div>
 
-
-    <footer>
-        <p>&copy; <a href="http://www.DaveVoyles.com">Base code from Dave Voyles</a> | Microsoft Corp. 2015 </p>
-    </footer>
     
 
-  <!-- 
-    <script>
-        $(document).ready(function () {
-
-            //stream to video element
-            var $video = $('#videoTag')[0];
-            streamVideo($video);
-            var source = $video;
-
-        });
-    </script>-->
     
      <script src="js/UserMedia.js"></script>
-
-    <script type="text/javascript" src="lib/awe-loader-min.js"></script>
     <script type="text/javascript" src="js/sketchpad.js"></script>
     <script type="text/javascript" src="lib/underscore-min.js"></script>
     
-    <!-- <script type="text/javascript" src="arcontroller.js"></script>
-     -->
+    
 </body>
 
 </html>
