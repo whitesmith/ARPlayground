@@ -269,8 +269,8 @@ function onLoad() {
 
         for (i = 0; i !== markers.length; ++i) {
             corners = markers[i].corners;
-            $('<div> id="canvasD" style="top:' + corners[0].x + '; left:' + corners[0].y + ' width:200px; height:200px; color:white;"'
-            }).appendTo($('<video>'); ArEL = $("#canvasD");
+            $('<div> id="canvasD" style="top:' + corners[0].x + '; left:' + corners[0].y + ' width:200px; height:200px; color:white;"').appendTo($('<video>')); 
+                                                                                                                                    ArEL = $("#canvasD");
             /*         context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
             context.fillStyle = "white"; context.fill();*/
 
