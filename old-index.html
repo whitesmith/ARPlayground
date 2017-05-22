@@ -5,116 +5,141 @@
     <title>AR Playground</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
     <meta charset="utf-8" />
- <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-    </script>
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="jquery.wheelcolorpicker/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="jquery.wheelcolorpicker/jquery.wheelcolorpicker.js"></script>
+    <link type="text/css" rel="stylesheet" href="jquery.wheelcolorpicker/css/wheelcolorpicker.css" />
+
+
+
 
 </head>
 
-<body>
-    <div id="container">
-         <video id="videoTag" src="" autoplay muted class="view--video__video"></video>
-        
-    </div>
-    <div id="sketchpadapp">
-        <style media="screen">
-            canvas {
-                border: 10px solid white
-            }
-        </style>
-        
-        <canvas id="sketchpad"></canvas>
-    </div>
+
+<body onload="canvas()">
+
+    <input id="chosenColor" type="text" onclick="color(this)" data-wheelcolorpicker/>
+    <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+
+    <div style="position:absolute;top:20%;left:43%;">Eraser</div>
+    <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white"></div>
+    <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+    <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
+    <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
+</body>
+
+<script type="text/javascript">
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "black",
+        y = 10;
+
+    function canvas() {
+        canvas = document.getElementById('can');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
 
 
-  
 
-    <script>
-      
-        var CanvasDrawr = function (options) {
-            var canvas = document.getElementById(options.id),
-                ctxt = canvas.getContext("2d");
-            canvas.style.width = '100%'
-            canvas.width = canvas.offsetWidth;
-            canvas.style.width = '';
-            ctxt.lineWidth = options.size || Math.ceil(Math.random() * 35);
-            ctxt.lineCap = options.lineCap || "round";
-            ctxt.pX = undefined;
-            ctxt.pY = undefined;
-            var lines = [, , ];
-            var offset = $(canvas).offset();
-            var self = {
-                init: function () {
-                    canvas.addEventListener('touchstart', self.preDraw, false);
-                    canvas.addEventListener('touchmove', self.draw, false);
-                },
-                preDraw: function (event) {
-                    $.each(event.touches, function (i, touch) {
-                        var id = touch.identifier,
-                            colors = ["red", "green", "yellow", "blue", "magenta", "orange","red"],
-                            mycolor = colors[Math.floor(Math.random() * colors.length)];
-                        lines[id] = {
-                            x: this.pageX - offset.left,
-                            y: this.pageY - offset.top,
-                            color: mycolor
-                        };
-                    });
-                    event.preventDefault();
-                },
-                draw: function (event) {
-                    var e = event,
-                        hmm = {};
-                    $.each(event.touches, function (i, touch) {
-                        var id = touch.identifier,
-                            moveX = this.pageX - offset.left - lines[id].x,
-                            moveY = this.pageY - offset.top - lines[id].y;
-                        var ret = self.move(id, moveX, moveY);
-                        lines[id].x = ret.x;
-                        lines[id].y = ret.y;
-                    });
-                    
-                      
-                   
-                    event.preventDefault();
-                },
-                move: function (i, changeX, changeY) {
-                    ctxt.strokeStyle = lines[i].color;
-                    ctxt.beginPath();
-                    ctxt.moveTo(lines[i].x, lines[i].y);
-                    ctxt.lineTo(lines[i].x + changeX, lines[i].y + changeY);
-                    ctxt.stroke();
-                    ctxt.closePath();
-                    return {
-                        x: lines[i].x + changeX,
-                        y: lines[i].y + changeY
-                    };
-                }
-            };
-            return self.init();
-        };
-        
-        
-        
-        $(function () {
-            var canvas_draw = new CanvasDrawr({
-                id: "sketchpad",
-                size: 15
-            });
+    function color() {
+
+
+        $('#white').click(function () {
+            x = "white";
+            y = 30;
+            $('#white').html("Rubber activated");
         });
-       
-        
-        
-    </script>
+
+        $('#chosenColor').click(function () {
+            $('#white').html("");
+            console.log("do");
+            x = "#" + $("#chosenColor").val();
+            console.log(x);
+            console.log($("#chosenColor").val());
+
+            y = 10;
+        });
+
+    }
+
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+        }
+    }
+
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+</script>
 
 
-    <script type="text/javascript" src="lib/awe-loader-min.js"></script>
-    <script type="text/javascript" src="sketchpad.js"></script>
-    <script type="text/javascript" src="lib/underscore-min.js"></script>
-    <script type="text/javascript" src="arcontroller.js"></script>
-     <script type="text/javascript" src="js/UserMedia.js"></script>
 
-
-    </body>
-
-
-
-        </html>
+</html>
