@@ -37,13 +37,13 @@ JSAruco
 
 JsARToolkit
 ========
-<a href="https://github.com/artoolkit/jsartoolkit5"></a>
+<a href="https://github.com/artoolkit/jsartoolkit5"> Github repo for JsARToolkit</a>
 <br>
 
 
 AWE Js
 ========
-<a href="https://github.com/awe-media/awe.js"></a>
+<a href="https://github.com/awe-media/awe.js"> Github repo for Awe.js</a>
 <br>
 
 
@@ -60,11 +60,11 @@ Multitouch Canvas Fingerpaint Demo by</b>  <a href="timbranyen.com">Tim Branyen<
 
 Paiting Canvas
 ================
-<a href="http://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse"></a>
+<a href="http://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse"> Drawing on canvas with mouse</a>
 <br>
 
 
 Color Picker 
 ================
-<a href="http://files.jar2.net/jquery/wheelcolorpicker/example-v3/example.html"></a>
+<a href="http://files.jar2.net/jquery/wheelcolorpicker/example-v3/example.html"> Wheel Color Picker</a>
 <br>
