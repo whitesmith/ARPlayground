@@ -269,10 +269,12 @@ function onLoad() {
 
         for (i = 0; i !== markers.length; ++i) {
             corners = markers[i].corners;
-            $('<div> id="canvasD" style="top:' + corners[0].x + '; left:' + corners[0].y + ' width:200px; height:200px; color:white;"').appendTo($('<video>')); 
-                                                                                                                                    ArEL = $("#canvasD");
-            /*         context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
-            context.fillStyle = "white"; context.fill();*/
+         $('#canvas').append("<div  id='canvasD'  style= 'z-index:1000000000000000; top:" + corners[0].x + "px; left:" + corners[0].y + "px; width:200px; height:200px; color:blue;'></div>");
+            //console.log("batatas");
+            ArEL = $("#canvasD");
+            context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
+            context.fillStyle = "pink";
+            context.fill();
 
             /*----------- RECOG. CLICK ON CANVAS ----------- */
 
@@ -311,10 +313,10 @@ function onLoad() {
             flag = true;
             dot_flag = true;
             if (dot_flag) {
-                ctx.beginPath();
-                ctx.fillStyle = x;
-                ctx.fillRect(currX, currY, 2, 2);
-                ctx.closePath();
+                context.beginPath();
+                context.fillStyle = c;
+                context.fillRect(currX, currY, 2, 2);
+                context.closePath();
                 dot_flag = false;
             }
         }
@@ -372,7 +374,7 @@ function onLoad() {
     function erase() {
         var m = confirm("Want to clear");
         if (m) {
-            ctx.clearRect(0, 0, w, h);
+            context.clearRect(0, 0, w, h);
             document.getElementById("canvasimg").style.display = "none";
         }
     }
