@@ -23,15 +23,23 @@
 
 </head>
 
-<body>
+<body >
 
     <center>
         <div style="margin: 10px;"><strong> WHITESMITH AR WALL</strong></div>
 
-        <canvas id="canvas" style="width:1080px; height:720px;"></canvas>
+        <canvas id="canvas" class="video__canvas" style="display:fixed; width: 960px; height:720px; z-index:-2">
+            
+             This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+         <canvas id="canvas2" style="width: 960px; height:720px; z-index:100">
+            
+             This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+
 
         <!--  — — — — — — — — — — — — — VIDEO ELEMENT — — — — — — — — — — — — — -->
-        <video id="video" autoplay="true" style="width:1080px; height:720px; display:none;"></video>
+        <video id="video" autoplay="true" style="width:960px; height:720px; display:none;"></video>
 
          <!--  — — — — — — — — — — — — — CONTROLS — — — — — — — — — — — — — -->
        
