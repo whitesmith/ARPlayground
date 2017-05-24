@@ -32,7 +32,7 @@ This project was made up by studying several Js Libraries and online tutorials.
 
 JSAruco
 ========
-<a  href="https://github.com/jcmellado/js-aruco"></a>
+<a  href="https://github.com/jcmellado/js-aruco"> Github repo for JsARuco</a>
 <br>
 
 JsARToolkit
