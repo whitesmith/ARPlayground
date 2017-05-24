@@ -68,3 +68,10 @@ Color Picker
 ================
 <a href="http://files.jar2.net/jquery/wheelcolorpicker/example-v3/example.html"> Wheel Color Picker</a>
 <br>
+
+
+Selecting canvas elements
+================
+<a href="https://simonsarris.com/making-html5-canvas-useful/"> A Gentle Introduction to Making HTML5 Canvas Interactive</a>
+<br>
+
