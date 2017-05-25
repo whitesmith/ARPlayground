@@ -1,258 +1,275 @@
+console.log("cam in");
+
+if (navigator.mediaDevices === undefined) {
+    navigator.mediaDevices = {};
+}
 
 
 
-function onLoad() {
-    console.log("cam in"); 
 
-    if (navigator.mediaDevices === undefined) {
-        navigator.mediaDevices = {};
+/*----------- CONECTING CAMERA TO GETUSERMEDIA LIBRARY ----------- */
+
+if (navigator.mediaDevices.getUserMedia === undefined) {
+    navigator.mediaDevices.getUserMedia = function (constraints) {
+
+        // First get ahold of the legacy getUserMedia, if present
+        getUserMedia = navigator.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+        // Some browsers just don't implement it - return a rejected promise with an error
+        // to keep a consistent interface
+        if (!getUserMedia) {
+            return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+        }
+
+        // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+        return new Promise(function (resolve, reject) {
+            getUserMedia.call(navigator, constraints, resolve, reject);
+        });
+    }
+}
+
+
+document.getElementById('switch').addEventListener('click', nextWebCam, false);
+
+
+
+
+function successCallback(stream) {
+    mediaStream = stream;
+
+    if ("srcObject" in video) {
+        video.srcObject = mediaStream;
+    } else {
+        // Avoid using this in new browsers, as it is going away.
+        video.src = window.URL.createObjectURL(mediaStream);
+        attachMediaStream(video, mediaStream);
+    }
+    video.onloadedmetadata = function (e) {
+        video.play();
+        //console.log(webcamList.length);
+    }
+
+    if (webcamList.length > 1) {
+        console.log(" > 1 ");
+        document.getElementById('switch').disabled = false; //If more than 1 cam, enable switch button
+        console.log(">1");
     }
 
 
-    
+}
 
-    /*----------- CONECTING CAMERA TO GETUSERMEDIA LIBRARY ----------- */
+/*----------- SWITCH CAM BUTTON ----------- */
 
-    if (navigator.mediaDevices.getUserMedia === undefined) {
-        navigator.mediaDevices.getUserMedia = function (constraints) {
-
-            // First get ahold of the legacy getUserMedia, if present
-           getUserMedia = navigator.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-            // Some browsers just don't implement it - return a rejected promise with an error
-            // to keep a consistent interface
-            if (!getUserMedia) {
-                return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-            }
-
-            // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
-            return new Promise(function (resolve, reject) {
-                getUserMedia.call(navigator, constraints, resolve, reject);
-            });
-        }
-    }
+$('.toggle').click(function () {
+    batata = !batata;
 
 
-    document.getElementById('switch').addEventListener('click', nextWebCam, false);
+    if (batata == true) {
+        $('.toggle').html("Play");
+        video.onloadedmetadata = video.pause();
+        //console.log("pause");
 
+    } else {
+        $('.toggle').html("Pause");
+        video.onloadedmetadata = video.play();
 
-
-
-    function successCallback(stream) {
-        mediaStream = stream;
-
-        if ("srcObject" in video) {
-            video.srcObject = mediaStream;
-        } else {
-            // Avoid using this in new browsers, as it is going away.
-            video.src = window.URL.createObjectURL(mediaStream);
-            attachMediaStream(video, mediaStream);
-        }
-        video.onloadedmetadata = function (e) {
-            video.play();
-            //console.log(webcamList.length);
-        }
-
-        if (webcamList.length > 1) {
-            console.log(" > 1 ");
-            document.getElementById('switch').disabled = false; //If more than 1 cam, enable switch button
-            console.log(">1");
-        }
 
 
     }
-
-    /*----------- SWITCH CAM BUTTON ----------- */
-
-    $('.toggle').click(function () {
-        batata = !batata;
-
-
-        if (batata == true) {
-            $('.toggle').html("Play");
-            video.onloadedmetadata = video.pause();
-            //console.log("pause");
-
-        } else {
-            $('.toggle').html("Pause");
-            video.onloadedmetadata = video.play();
-
-
-
-        }
-    });
+});
 
 
 
 
-    function errorCallback(error) {}
+function errorCallback(error) {}
 
 
-    navigator.getUserMedia({
-        video: true
+navigator.getUserMedia({
+    video: true
 
-    }, successCallback, errorCallback);
+}, successCallback, errorCallback);
 
 
 
-    /*----------- SWITCH CAM FUNCTION ----------- */
+/*----------- SWITCH CAM FUNCTION ----------- */
 
-    // nextWebCam() - Function to rotate through the webcam device list
-    // 1. Release the current webcam (if there is one in use)
-    // 2. Call getUserMedia() to access the next webcam
+// nextWebCam() - Function to rotate through the webcam device list
+// 1. Release the current webcam (if there is one in use)
+// 2. Call getUserMedia() to access the next webcam
 
-     var nextWebCam = function () {
-        console.log("lista tem " + webcamList.length);
-        document.getElementById('switch').disabled = true;
-        if (currentCam !== null) {
-            currentCam++;
+var nextWebCam = function () {
+    console.log("lista tem " + webcamList.length);
+    document.getElementById('switch').disabled = true;
+    if (currentCam !== null) {
+        currentCam++;
 
-            if (currentCam >= webcamList.length) {
-                currentCam = 0;
-
-            }
-             video = document.getElementById('video');
-            video.srcObject = null;
-            video.src = null;
-            if (mediaStream) {
-                console.log("esta lista tem " + webcamList.length);
-                  videoTracks = mediaStream.getVideoTracks();
-                videoTracks[0].stop();
-                mediaStream = null;
-            }
-        } else {
+        if (currentCam >= webcamList.length) {
             currentCam = 0;
-            console.log("A lista " + webcamList.length);
+
         }
+        video = document.getElementById('video');
+        video.srcObject = null;
+        video.src = null;
+        if (mediaStream) {
+            console.log("esta lista tem " + webcamList.length);
+            videoTracks = mediaStream.getVideoTracks();
+            videoTracks[0].stop();
+            mediaStream = null;
+        }
+    } else {
+        currentCam = 0;
+        console.log("A lista " + webcamList.length);
+    }
 
-        navigator.mediaDevices.getUserMedia({
+    navigator.mediaDevices.getUserMedia({
 
-                video: {
-                    width: 1280,
-                    height: 720,
-                    // console.log("A lista " + webcamList.length);
-                    deviceId: {
-                        exact: webcamList[currentCam]
-                    }
+            video: {
+                width: 1280,
+                height: 720,
+                // console.log("A lista " + webcamList.length);
+                deviceId: {
+                    exact: webcamList[currentCam]
                 }
-
-            }).then(successCallback)
-            .catch(errorCallback);
-    };
-
-
-    // deviceChanged() - Handle devicechange event
-    // 1. Reset webcamList
-    // 2. Re-enumerate webcam devices
-
-     var deviceChanged = function () {
-        console.log("neste momento, a lista tem " + webcamList.length);
-        navigator.mediaDevices.removeEventListener('devicechange', deviceChanged);
-        // Reset the webcam list and re-enumerate
-        webcamList = [];
-
-        navigator.mediaDevices.enumerateDevices().then(devicesCallback);
-
-    };
-
-
-    // devicesCallback() - Callback function for device enumeration
-    // 1. Identify all webcam devices and store the info in the webcamList
-    // 2. Start the demo with the first webcam on the list
-    // 3. Show the webcam 'switch' button when there are multiple webcams
-    // 4. Show error message when there is no webcam
-    // 5. Register event listener (devicechange) to respond to device plugin or unplug
-
-    var devicesCallback = function (devices) {
-        // Identify all webcams
-        console.log("neste momento, a lista tem " + webcamList.length);
-        for (var i = 0; i < devices.length; i++) {
-            if (devices[i].kind === 'videoinput') {
-                webcamList[webcamList.length] = devices[i].deviceId;
-
             }
+
+        }).then(successCallback)
+        .catch(errorCallback);
+};
+
+
+// deviceChanged() - Handle devicechange event
+// 1. Reset webcamList
+// 2. Re-enumerate webcam devices
+
+var deviceChanged = function () {
+    console.log("neste momento, a lista tem " + webcamList.length);
+    navigator.mediaDevices.removeEventListener('devicechange', deviceChanged);
+    // Reset the webcam list and re-enumerate
+    webcamList = [];
+
+    navigator.mediaDevices.enumerateDevices().then(devicesCallback);
+
+};
+
+
+// devicesCallback() - Callback function for device enumeration
+// 1. Identify all webcam devices and store the info in the webcamList
+// 2. Start the demo with the first webcam on the list
+// 3. Show the webcam 'switch' button when there are multiple webcams
+// 4. Show error message when there is no webcam
+// 5. Register event listener (devicechange) to respond to device plugin or unplug
+
+var devicesCallback = function (devices) {
+    // Identify all webcams
+    console.log("neste momento, a lista tem " + webcamList.length);
+    for (var i = 0; i < devices.length; i++) {
+        if (devices[i].kind === 'videoinput') {
+            webcamList[webcamList.length] = devices[i].deviceId;
+
         }
+    }
 
-        if (webcamList.length > 0) {
+    if (webcamList.length > 0) {
 
-            console.log("temos " + webcamList.length);
-            // Start video with the first device on the list
-            nextWebCam();
-            if (webcamList.length > 1) {
-                document.getElementById('switch').disabled = false;
-            } else {
-                document.getElementById('switch').disabled = true;
-            }
+        console.log("temos " + webcamList.length);
+        // Start video with the first device on the list
+        nextWebCam();
+        if (webcamList.length > 1) {
+            document.getElementById('switch').disabled = false;
         } else {
-            errorCallback();
+            document.getElementById('switch').disabled = true;
         }
-        navigator.mediaDevices.addEventListener('devicechange', deviceChanged);
-    };
+    } else {
+        errorCallback();
+    }
+    navigator.mediaDevices.addEventListener('devicechange', deviceChanged);
+};
 
-    /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
+/*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
 
-    detector = new AR.Detector();
+detector = new AR.Detector();
 
-    requestAnimationFrame(tick);
+requestAnimationFrame(tick);
 
+ function tick() {
 
+          requestAnimationFrame(tick);
+            
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                snapshot();
 
-   
-
-
-    function drawContours(contours, cx, cy, width, height, fn) {
-          i = contours.length,
-            j, contour, point;
-
-        while (i--) {
-            contour = contours[i];
-
-            context.strokeStyle = fn(contour.hole);
-            context.beginPath();
-
-            for (j = 0; j < contour.length; ++j) {
-                point = contour[j];
-                this.context.moveTo(cx + point.cx, cy + point.cy);
-                point = contour[(j + 1) % contour.length];
-                this.context.lineTo(cx + point.cx, cy + point.cy);
+                markers = detector.detect(imageData);
+                //drawDebug();
+                drawCorners(markers);
+                //drawId(markers);
             }
-
-            context.stroke();
-            context.closePath();
         }
-    }
 
 
-    function drawCorners(markers) {
-          corners, corner, i, j;
-
-
-
-
-
-
-        for (i = 0; i !== markers.length; ++i) {
-            corners = markers[i].corners;
-
-            // ArEL = $("#canvasD");
-            // n.addShape(new Shape(corners[0].x, corners[0].y , 200, 200,'rgba(186, 0, 255, 0.6)'));
-            // console.log(corners[0].x);
-
-            // console.log("desenhou");
-            //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
-            // context.fillStyle = "pink";
-            //context.fill();
-
-            /*----------- RECOG. CLICK ON CANVAS ----------- */
-
+        function snapshot() {
+            context.drawImage(video, 0, 0, camera.width, camera.height);
+            //desenhar quadrados AQUI
+            k = new CanvasState(document.getElementById('canvas'));
+            k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
+            imageData = context.getImageData(0, 0, camera.width, camera.height);
         }
+
+
+
+
+function drawContours(contours, cx, cy, width, height, fn) {
+    i = contours.length,
+        j, contour, point;
+
+    while (i--) {
+        contour = contours[i];
+
+        context.strokeStyle = fn(contour.hole);
+        context.beginPath();
+
+        for (j = 0; j < contour.length; ++j) {
+            point = contour[j];
+            this.context.moveTo(cx + point.cx, cy + point.cy);
+            point = contour[(j + 1) % contour.length];
+            this.context.lineTo(cx + point.cx, cy + point.cy);
+        }
+
+        context.stroke();
+        context.closePath();
     }
+}
+
+
+function drawCorners(markers) {
+    corners, corner, i, j;
 
 
 
 
 
-    /*function canvas() {
+
+    for (i = 0; i !== markers.length; ++i) {
+        corners = markers[i].corners;
+
+        // ArEL = $("#canvasD");
+        // n.addShape(new Shape(corners[0].x, corners[0].y , 200, 200,'rgba(186, 0, 255, 0.6)'));
+        // console.log(corners[0].x);
+
+        // console.log("desenhou");
+        //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
+        // context.fillStyle = "pink";
+        //context.fill();
+
+        /*----------- RECOG. CLICK ON CANVAS ----------- */
+
+    }
+}
+
+
+
+
+
+/*function canvas() {
 
         w = ArEL.width;
         h = ArEL.height;
@@ -271,9 +288,9 @@ function onLoad() {
         }, false);
     }
 */
-    /*----------- FIND CLICK ON CANVAS ----------- */
+/*----------- FIND CLICK ON CANVAS ----------- */
 
-    /*function findxy(res, e) {
+/*function findxy(res, e) {
         if (res == 'down') {
             prevX = currX;
             prevY = currY;
@@ -305,32 +322,32 @@ function onLoad() {
     }
 */
 
-    /*----------- CHANGE COLOR W/COLOR PICKER ----------- */
+/*----------- CHANGE COLOR W/COLOR PICKER ----------- */
 
 
-    /*
+/*
 
-        $('#white').click(function () {
-            c = "white";
-            n = 30;
-            $('#white').html("Rubber activated");
-        });
+    $('#white').click(function () {
+        c = "white";
+        n = 30;
+        $('#white').html("Rubber activated");
+    });
 
-        $('#chosenColor').click(function () {
-            $('#white').html("");
-            // console.log("do");
-            c = "#" + document.getElementById("chosenColor").value;
-            //console.log(c);
-            // console.log(document.getElementById("chosenColor").value);
+    $('#chosenColor').click(function () {
+        $('#white').html("");
+        // console.log("do");
+        c = "#" + document.getElementById("chosenColor").value;
+        //console.log(c);
+        // console.log(document.getElementById("chosenColor").value);
 
-            n = 10;
+        n = 10;
 
-        });
-    */
+    });
+*/
 
-    /*----------- DRAWING  ON CANVAS ----------- */
+/*----------- DRAWING  ON CANVAS ----------- */
 
-    /* function draw() {
+/* function draw() {
         context.beginPath();
         context.moveTo(prevX, prevY);
         context.lineTo(currX, currY);
@@ -340,18 +357,18 @@ function onLoad() {
         context.closePath();
     }
 */
-    /*----------- ERASING DRAWING ----------- */
-    /*function erase() {
-        var m = confirm("Want to clear");
-        if (m) {
-            context.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
-        }
-    }*/
+/*----------- ERASING DRAWING ----------- */
+/*function erase() {
+    var m = confirm("Want to clear");
+    if (m) {
+        context.clearRect(0, 0, w, h);
+        document.getElementById("canvasimg").style.display = "none";
+    }
+}*/
 
-    /*----------- SAVING DRAWING ----------- */
+/*----------- SAVING DRAWING ----------- */
 
-    /*function save() {
+/*function save() {
         document.getElementById("canvasimg").style.border = "2px solid";
         var dataURL = ArEL.toDataURL();
         document.getElementById("canvasimg").src = dataURL;
@@ -360,47 +377,39 @@ function onLoad() {
 */
 
 
-    /*----------- DRAWING MARKER ID ----------- */
-    /*
-        function drawId(markers) {
-            var corners, corner, x, y, i, j;
+/*----------- DRAWING MARKER ID ----------- */
+/*
+    function drawId(markers) {
+        var corners, corner, x, y, i, j;
 
-            context.strokeStyle = "blue";
-            context.lineWidth = 1;
+        context.strokeStyle = "blue";
+        context.lineWidth = 1;
 
-            for (i = 0; i !== markers.length; ++i) {
-                corners = markers[i].corners;
+        for (i = 0; i !== markers.length; ++i) {
+            corners = markers[i].corners;
 
-                x = Infinity;
-                y = Infinity;
+            x = Infinity;
+            y = Infinity;
 
-                for (j = 0; j !== corners.length; ++j) {
-                    corner = corners[j];
+            for (j = 0; j !== corners.length; ++j) {
+                corner = corners[j];
 
-                    x = Math.min(x, corner.x);
-                    y = Math.min(y, corner.y);
-                }
-
-                context.strokeText(markers[i].id, x, y)
+                x = Math.min(x, corner.x);
+                y = Math.min(y, corner.y);
             }
-        }*/
 
-    /* function createImage(src, dst) {
-         var i = src.data.length,
-             j = (i * 4) + 3;
+            context.strokeText(markers[i].id, x, y)
+        }
+    }*/
 
-         while (i--) {
-             dst.data[j -= 4] = 255;
-             dst.data[j - 1] = dst.data[j - 2] = dst.data[j - 3] = src.data[i];
-         }
+/* function createImage(src, dst) {
+     var i = src.data.length,
+         j = (i * 4) + 3;
 
-         return dst;
-     };*/
+     while (i--) {
+         dst.data[j -= 4] = 255;
+         dst.data[j - 1] = dst.data[j - 2] = dst.data[j - 3] = src.data[i];
+     }
 
-
-
-
-
-}
-
-window.onload = onLoad;
+     return dst;
+ };*/
