@@ -211,6 +211,7 @@ requestAnimationFrame(tick);
             //desenhar quadrados AQUI
             k = new CanvasState(document.getElementById('canvas'));
             k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
+            console.log("batata")
             imageData = context.getImageData(0, 0, camera.width, camera.height);
         }
 
