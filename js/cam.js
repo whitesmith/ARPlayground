@@ -197,26 +197,7 @@ function onLoad() {
 
 
 
-    function tick() {
-        requestAnimationFrame(tick);
-
-        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-            snapshot();
-
-              markers = detector.detect(imageData);
-            //drawDebug();
-            drawCorners(markers);
-            //drawId(markers);
-        }
-    }
-
-    function snapshot() {
-        context.drawImage(video, 0, 0, camera.width, camera.height);
-        //desenhar quadrados AQUI
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
-        imageData = context.getImageData(0, 0, camera.width, camera.height);
-    }
+   
 
 
     function drawContours(contours, cx, cy, width, height, fn) {
