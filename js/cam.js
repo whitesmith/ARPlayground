@@ -186,48 +186,52 @@ var devicesCallback = function (devices) {
 };
 
 /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
-    function tick() {
+function tick() {
+   // console.log("tick");
+    requestAnimationFrame(tick);
 
-        requestAnimationFrame(tick);
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
 
-        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-
-            snapshot();
+        snapshot();
 
 
-            //drawId(markers);
-        }
+        //drawId(markers);
     }
+}
 
 
-    function snapshot() {
+function snapshot() {
 
-        // console.log("batata")
-        imageData = context.getImageData(0, 0, camera.width, camera.height);
-        markers = detector.detect(imageData);
-        context.drawImage(video, 0, 0, camera.width, camera.height);
+   // console.log("batata");
 
-        //só desenha se detetar video
-        //quero que só desenhe se detetar um marcador
+    context.drawImage(video, 0, 0, camera.width, camera.height);
+    imageData = context.getImageData(0, 0, camera.width, camera.height);
+    markers = detector.detect(imageData);
 
-        drawCorners(markers);
+    
+    //quero que só desenhe se detetar um marcador
 
-
-    }
+    drawCorners(markers);
 
 
+}
 
-    function drawV() {
 
-        detector = new AR.Detector();
 
-        requestAnimationFrame(tick);
+function drawV() {
+    
+    console.log("linda batata");
 
-        tick();
+    detector = new AR.Detector();
 
-    }
+    requestAnimationFrame(tick);
 
-   drawV();
+    tick();
+
+
+}
+
+drawV();
 
 
 function drawCorners(markers) {
@@ -241,14 +245,14 @@ function drawCorners(markers) {
     for (i = 0; i !== markers.length; ++i) {
         corners = markers[i].corners;
 
-      
-            k = new CanvasState(document.getElementById('canvas'));
-            k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
 
-            //n is for debugging
-            n = new CanvasState(document.getElementById('canvas2'));
-            n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
-        
+        k = new CanvasState(document.getElementById('canvas'));
+        k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
+
+        //n is for debugging
+        n = new CanvasState(document.getElementById('canvas2'));
+        n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
+
         // console.log("desenhou");
         //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
         // context.fillStyle = "pink";

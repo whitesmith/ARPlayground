@@ -10,6 +10,7 @@ console.log("interactivity in");
 // Constructor for Shape objects to hold data for all drawn objects.
 // For now they will just be defined as rectangles.
 function Shape(x, y, w, h, fill) {
+    console.log("canvas shape");
     // This is a very simple and unsafe constructor. 
     // All we're doing is checking if the values exist.
     // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
@@ -22,6 +23,7 @@ function Shape(x, y, w, h, fill) {
 
 // Draws this shape to a given context
 Shape.prototype.draw = function (context) {
+    console.log("canvas shape draw");
     context.fillStyle = this.fill;
     context.fillRect(this.x, this.y, this.w, this.h);
 }
@@ -38,6 +40,7 @@ Shape.prototype.contains = function (mx, my) {
 }
 
 function CanvasState(canvas) {
+    console.log("canvas state");
     // **** First some setup! ****
 
     this.canvas = canvas;
@@ -106,6 +109,7 @@ function CanvasState(canvas) {
         // havent returned means we have failed to select anything.
         // If there was an object selected, we deselect it
         if (myState.selection) {
+            console.log("canvas selection");
             myState.selection = null;
             myState.valid = false; // Need to clear the old selection border
         }
@@ -147,17 +151,20 @@ function CanvasState(canvas) {
 }
 
 CanvasState.prototype.addShape = function (shape) {
+    console.log("canvas addShape");
     this.shapes.push(shape);
     this.valid = false;
 }
 
 CanvasState.prototype.clear = function () {
+    console.log("canvas prototype");
     this.context.clearRect(0, 0, this.width, this.height);
 }
 
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
 CanvasState.prototype.draw = function () {
+    console.log("canvas draw");
     // if our state is invalid, redraw and validate!
     if (!this.valid) {
         var ctx = this.context;
@@ -167,8 +174,8 @@ CanvasState.prototype.draw = function () {
         // ** Add stuff you want drawn in the background all the time here **
         //VIDEO AQUI!!
 
-       
-       //drawV();
+
+       // drawV();
 
 
 
@@ -232,5 +239,3 @@ CanvasState.prototype.getMouse = function (e) {
 
 
 }
-
-console.log("last line");
