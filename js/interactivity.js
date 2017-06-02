@@ -167,10 +167,7 @@ CanvasState.prototype.clear = function () {
 
 
 function drawCorners(markers) {
-    corners, corner, i, j;
-
-
-
+    //corners, corner, i, j;
 
 
 
