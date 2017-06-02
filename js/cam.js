@@ -206,6 +206,7 @@ function snapshot() {
 
     context.drawImage(video, 0, 0, camera.width, camera.height);
     imageData = context.getImageData(0, 0, camera.width, camera.height);
+    detector = new AR.Detector();
     markers = detector.detect(imageData);
 
     
@@ -222,7 +223,7 @@ function drawV() {
     
     console.log("linda batata");
 
-    detector = new AR.Detector();
+   
 
     requestAnimationFrame(tick);
 
