@@ -234,35 +234,6 @@ function drawV() {
 drawV();
 
 
-function drawCorners(markers) {
-    corners, corner, i, j;
-
-
-
-
-
-
-    for (i = 0; i !== markers.length; ++i) {
-        corners = markers[i].corners;
-
-
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
-
-        //n is for debugging
-        n = new CanvasState(document.getElementById('canvas2'));
-        n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
-
-        // console.log("desenhou");
-        //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
-        // context.fillStyle = "pink";
-        //context.fill();
-
-        /*----------- RECOG. CLICK ON CANVAS ----------- */
-
-    }
-}
-
 
 
 
