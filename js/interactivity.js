@@ -167,7 +167,10 @@ CanvasState.prototype.draw = function () {
         // ** Add stuff you want drawn in the background all the time here **
         //VIDEO AQUI!!
 
+        detector = new AR.Detector();
 
+        requestAnimationFrame(tick);
+        
         tick();
 
 
@@ -229,4 +232,8 @@ CanvasState.prototype.getMouse = function (e) {
         x: mx,
         y: my
     };
+
+
 }
+
+console.log("last line");

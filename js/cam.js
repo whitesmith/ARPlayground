@@ -187,33 +187,39 @@ var devicesCallback = function (devices) {
 
 /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
 
-detector = new AR.Detector();
+        detector = new AR.Detector();
 
-requestAnimationFrame(tick);
-
- function tick() {
-
-          requestAnimationFrame(tick);
-            
-            if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                snapshot();
-
-                markers = detector.detect(imageData);
-                //drawDebug();
-                drawCorners(markers);
-                //drawId(markers);
-            }
-        }
+        requestAnimationFrame(tick);
+        
 
 
-        function snapshot() {
-            context.drawImage(video, 0, 0, camera.width, camera.height);
-            //desenhar quadrados AQUI
-            k = new CanvasState(document.getElementById('canvas'));
-            k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
-            console.log("batata")
-            imageData = context.getImageData(0, 0, camera.width, camera.height);
-        }
+function tick() {
+
+    requestAnimationFrame(tick);
+
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        k = new CanvasState(document.getElementById('canvas'));
+        k.addShape(new Shape(0, 0, 200, 200, '#6f3227 '));
+        snapshot();
+        k = new CanvasState(document.getElementById('canvas'));
+        k.addShape(new Shape(0, 0, 200, 200, '#87fae8 '));
+        markers = detector.detect(imageData);
+        //drawDebug();
+        drawCorners(markers);
+        //drawId(markers);
+    }
+}
+
+
+function snapshot() {
+    
+    context.drawImage(video, 0, 0, camera.width, camera.height);
+    //desenhar quadrados AQUI
+    k = new CanvasState(document.getElementById('canvas'));
+    k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
+    // console.log("batata")
+    imageData = context.getImageData(0, 0, camera.width, camera.height);
+}
 
 
 
@@ -253,6 +259,8 @@ function drawCorners(markers) {
         corners = markers[i].corners;
 
         // ArEL = $("#canvasD");
+        k = new CanvasState(document.getElementById('canvas'));
+        k.addShape(new Shape(0, 0, 200, 200, '#fa87b8 '));
         // n.addShape(new Shape(corners[0].x, corners[0].y , 200, 200,'rgba(186, 0, 255, 0.6)'));
         // console.log(corners[0].x);
 
