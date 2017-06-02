@@ -4,6 +4,7 @@ WS INTERACTIVE INSTALATION WALL
 The purpose of this repo is to create a canvas inside an AR element.
 Once that is possible, there will be several AR markers with a separate canvas in each one, so that together they make a huge canvas in which people can interact and play.
 <br>
+<b>This only works on Chrome </b>
 
 Current state
 ================================
