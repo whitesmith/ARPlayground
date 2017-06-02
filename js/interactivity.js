@@ -132,8 +132,11 @@ function CanvasState(canvas) {
         // console.log("entrou double");
         var mouse = myState.getMouse(ev);
         // console.log("entrou rato");
-        //k = new CanvasState(document.getElementById('canvas2'));
+        k = new CanvasState(document.getElementById('canvas2'));
         myState.addShape(new Shape(mouse.x - 10, mouse.Y - 10, 20, 20, 'rgba(0, 10, 255, 0.6)'));
+        
+        //Debugging
+         k.addShape(new Shape(mouse.x - 10, mouse.Y - 10, 20, 20, 'rgba(0, 10, 255, 0.6)'));
         console.log(myState);
         k.addShape(new Shape(0, 0, 20, 20, 'rgba(0,255,0,.6)'));
         // console.log("entrou desenho");
@@ -160,6 +163,39 @@ CanvasState.prototype.clear = function () {
     console.log("canvas prototype");
     this.context.clearRect(0, 0, this.width, this.height);
 }
+
+
+
+function drawCorners(markers) {
+    corners, corner, i, j;
+
+
+
+
+
+
+    for (i = 0; i !== markers.length; ++i) {
+        corners = markers[i].corners;
+
+
+        k = new CanvasState(document.getElementById('canvas'));
+        k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
+
+        //n is for debugging
+        n = new CanvasState(document.getElementById('canvas2'));
+        n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
+
+        // console.log("desenhou");
+        //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
+        // context.fillStyle = "pink";
+        //context.fill();
+
+        /*----------- RECOG. CLICK ON CANVAS ----------- */
+
+    }
+}
+
+
 
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
