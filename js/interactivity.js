@@ -175,7 +175,7 @@ function drawCorners(markers) {
 
 
     for (i = 0; i !== markers.length; ++i) {
-        corners = markers[i].corners;
+        //corners = markers[i].corners;
 
 
         k = new CanvasState(document.getElementById('canvas'));
