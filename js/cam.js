@@ -186,65 +186,48 @@ var devicesCallback = function (devices) {
 };
 
 /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
+    function tick() {
+
+        requestAnimationFrame(tick);
+
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+
+            snapshot();
+
+
+            //drawId(markers);
+        }
+    }
+
+
+    function snapshot() {
+
+        // console.log("batata")
+        imageData = context.getImageData(0, 0, camera.width, camera.height);
+        markers = detector.detect(imageData);
+        context.drawImage(video, 0, 0, camera.width, camera.height);
+
+        //só desenha se detetar video
+        //quero que só desenhe se detetar um marcador
+
+        drawCorners(markers);
+
+
+    }
+
+
+
+    function drawV() {
 
         detector = new AR.Detector();
 
         requestAnimationFrame(tick);
-        
 
+        tick();
 
-function tick() {
-
-    requestAnimationFrame(tick);
-
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 200, 200, '#6f3227 '));
-        snapshot();
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 200, 200, '#87fae8 '));
-        markers = detector.detect(imageData);
-        //drawDebug();
-        drawCorners(markers);
-        //drawId(markers);
     }
-}
 
-
-function snapshot() {
-    
-    context.drawImage(video, 0, 0, camera.width, camera.height);
-    //desenhar quadrados AQUI
-    k = new CanvasState(document.getElementById('canvas'));
-    k.addShape(new Shape(0, 0, 200, 200, 'lightskyblue'));
-    // console.log("batata")
-    imageData = context.getImageData(0, 0, camera.width, camera.height);
-}
-
-
-
-
-function drawContours(contours, cx, cy, width, height, fn) {
-    i = contours.length,
-        j, contour, point;
-
-    while (i--) {
-        contour = contours[i];
-
-        context.strokeStyle = fn(contour.hole);
-        context.beginPath();
-
-        for (j = 0; j < contour.length; ++j) {
-            point = contour[j];
-            this.context.moveTo(cx + point.cx, cy + point.cy);
-            point = contour[(j + 1) % contour.length];
-            this.context.lineTo(cx + point.cx, cy + point.cy);
-        }
-
-        context.stroke();
-        context.closePath();
-    }
-}
+   drawV();
 
 
 function drawCorners(markers) {
@@ -258,12 +241,14 @@ function drawCorners(markers) {
     for (i = 0; i !== markers.length; ++i) {
         corners = markers[i].corners;
 
-        // ArEL = $("#canvasD");
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 200, 200, '#fa87b8 '));
-        // n.addShape(new Shape(corners[0].x, corners[0].y , 200, 200,'rgba(186, 0, 255, 0.6)'));
-        // console.log(corners[0].x);
+      
+            k = new CanvasState(document.getElementById('canvas'));
+            k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
 
+            //n is for debugging
+            n = new CanvasState(document.getElementById('canvas2'));
+            n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
+        
         // console.log("desenhou");
         //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
         // context.fillStyle = "pink";
