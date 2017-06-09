@@ -141,20 +141,20 @@ function CanvasState(canvas) {
 
     this.selectionColor = '#CC0000';
     this.selectionWidth = 2;
-    this.interval = 30;
+    this.interval = 70;
     setInterval(function () {
         myState.draw();
     }, myState.interval);
 }
 
 CanvasState.prototype.addShape = function (shape) {
-    console.log("canvas addShape");
+    //console.log("canvas addShape");
     this.shapes.push(shape);
     this.valid = false;
 }
 
 CanvasState.prototype.clear = function () {
-    console.log("canvas prototype");
+    //console.log("canvas prototype");
     this.context.clearRect(0, 0, this.width, this.height);
 }
 
