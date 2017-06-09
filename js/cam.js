@@ -48,7 +48,7 @@ function successCallback(stream) {
     }
     video.onloadedmetadata = function (e) {
         video.play();
-        //console.log(webcamList.length);
+        console.log("há"+webcamList.length+" cameras");
     }
 
     if (webcamList.length > 1) {
@@ -149,9 +149,9 @@ var deviceChanged = function () {
     // Reset the webcam list and re-enumerate
     webcamList = [];
 
-    navigator.mediaDevices.enumerateDevices().then(devicesCallback);
-
+    
 };
+
 
 
 // devicesCallback() - Callback function for device enumeration
@@ -186,6 +186,9 @@ var devicesCallback = function (devices) {
     }
     navigator.mediaDevices.addEventListener('devicechange', deviceChanged);
 };
+
+
+navigator.mediaDevices.enumerateDevices().then(devicesCallback);
 
 /*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
 
