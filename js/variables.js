@@ -22,6 +22,7 @@ var c = "",
     videoTracks = "",
     markers = "",
     detector = "",
+    detector="",
     i, j, contour, corners, corner, point, tickF,
     video = document.getElementById('video');
 
@@ -34,3 +35,9 @@ camera.height = 720;
 
 canvas.width = parseInt(canvas.style.width);
 canvas.height = parseInt(canvas.style.height);
+
+/*
+MIRROR AQUI*/
+
+/*  context.translate(camera.width, 0);
+    context.scale(-1, 1);*/

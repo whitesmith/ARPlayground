@@ -23,7 +23,7 @@ function Shape(x, y, w, h, fill) {
 
 // Draws this shape to a given context
 Shape.prototype.draw = function (context) {
-    console.log("canvas shape draw");
+   // console.log("canvas shape draw");
     context.fillStyle = this.fill;
     context.fillRect(this.x, this.y, this.w, this.h);
 }
@@ -64,7 +64,7 @@ function CanvasState(canvas) {
 
     // **** Keep track of state! ****
 
-    this.valid = false; // when set to false, the canvas will redraw everything
+    this.valid = true; // when set to false, the canvas will redraw everything
     this.shapes = []; // the collection of things to be drawn
     this.dragging = false; // Keep track of when we are dragging
     // the current selected object. In the future we could turn this into an array for multiple selection
@@ -129,17 +129,11 @@ function CanvasState(canvas) {
     }, true);
     // double click for making new shapes
     canvas.addEventListener('dblclick', function (ev) {
-        // console.log("entrou double");
-        var mouse = myState.getMouse(ev);
-        // console.log("entrou rato");
-        k = new CanvasState(document.getElementById('canvas2'));
-        myState.addShape(new Shape(mouse.x - 10, mouse.Y - 10, 20, 20, 'rgba(0, 10, 255, 0.6)'));
+
+        myState.addShape(new Shape(ev.clientX, ev.clientY, 100, 100, 'rgba(0, 10, 255, 0.6)'));
         
-        //Debugging
-         k.addShape(new Shape(mouse.x - 10, mouse.Y - 10, 20, 20, 'rgba(0, 10, 255, 0.6)'));
-        console.log(myState);
-        k.addShape(new Shape(0, 0, 20, 20, 'rgba(0,255,0,.6)'));
-        // console.log("entrou desenho");
+      
+        
     }, true);
 
 
@@ -166,49 +160,24 @@ CanvasState.prototype.clear = function () {
 
 
 
-function drawCorners(markers) {
-    //corners, corner, i, j;
-
-
-
-    for (i = 0; i !== markers.length; ++i) {
-        //corners = markers[i].corners;
-
-
-        k = new CanvasState(document.getElementById('canvas'));
-        k.addShape(new Shape(0, 0, 20, 20, '#000000 '));
-
-        //n is for debugging
-        n = new CanvasState(document.getElementById('canvas2'));
-        n.addShape(new Shape(0, 0, 20, 20, '#000000 '));
-
-        // console.log("desenhou");
-        //context.rect(corners[0].x, corners[0].y, 200, 200); //white canvas that appears with marker
-        // context.fillStyle = "pink";
-        //context.fill();
-
-        /*----------- RECOG. CLICK ON CANVAS ----------- */
-
-    }
-}
-
 
 
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
 CanvasState.prototype.draw = function () {
-    console.log("canvas draw");
+  //  console.log("canvas draw");
     // if our state is invalid, redraw and validate!
-    if (!this.valid) {
+//    if (!this.valid) {
         var ctx = this.context;
         var shapes = this.shapes;
         this.clear();
 
         // ** Add stuff you want drawn in the background all the time here **
         //VIDEO AQUI!!
-
-
-       // drawV();
+        
+ ctx.drawImage(video, 0, 0, camera.width, camera.height);
+     imageData = ctx.getImageData(0, 0, camera.width, camera.height);
+       // drawV(); 
 
 
 
@@ -235,8 +204,8 @@ CanvasState.prototype.draw = function () {
 
         // ** Add stuff you want drawn on top all the time here **
 
-        this.valid = true;
-    }
+//        this.valid = true;
+//    }
 }
 
 
@@ -244,8 +213,8 @@ CanvasState.prototype.draw = function () {
 // If you wanna be super-correct this can be tricky, we have to worry about padding and borders
 CanvasState.prototype.getMouse = function (e) {
     var element = this.canvas,
-        offsetX = 0,
-        offsetY = 0,
+        offsetX = -5,
+        offsetY = -5,
         mx, my;
 
     // Compute the total offset
