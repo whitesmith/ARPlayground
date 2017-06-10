@@ -169,7 +169,7 @@ function CanvasState(canvas) {
 
     //fixes a problem where double clicking causes text to get selected on the canvas
     
-    if(screen.width > 600){
+    if(screen.width > 1000){
         
     canvas.addEventListener('selectstart', function (e) {
         e.preventDefault();
