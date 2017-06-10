@@ -96,7 +96,7 @@ CanvasState.prototype.draw = function () {
             continue; {
 
             if (markers.length > 0) {
-
+console.log("leu marcador");
                 corner = markers[0].corners[0];
 
                 nx = corner.x;
