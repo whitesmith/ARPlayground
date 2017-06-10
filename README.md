@@ -81,4 +81,4 @@ Drag Bar
 ================
 <a href="http://webtutsdepot.com/2010/04/24/html-5-slider-input-tutorial/">HTML 5 Slider Bar Tutorial</a>
 <br>
-http://www.sitepoint.com/forums/showthread.php?623011-Drag-bar-to-modify-CSS-input-value
+
