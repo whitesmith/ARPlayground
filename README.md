@@ -8,8 +8,7 @@ Once that is possible, there will be several AR markers with a separate canvas i
 
 Current state
 ================================
-On the debug.html and cam.js file I've managed to show a white canvas when shown the marker to the camera.
-The next steps are being able to switch cameras on mobile devices (<i>issue</i>), and being able to draw on the shown camera by click or touch.
+Trying to finish fixing the camera issue in order to apply design afterwords.
 <br>
 
 
@@ -18,12 +17,11 @@ Steps
 1 - Connecting the camera to the Js Library and showing a plain canvas <br>
 2 - Switching camera output on mobile devices(frontal or rear)<br>
 3 - Drawing on canvas with click or touch <br>
-4 - Saving the drawing to be able to continue on another session<br>
-5 - Aplying a colorpicker to choose line color<br>
-6 - Aplying a rubber to delete <br>
-7 - Aplying a StrokeWidth controler <br>
-8 - Studying the marker size in order to be able to see the AR element a few meters away from the wall <br>
-9 - Making a portion of the available space for outside people to draw (Possibility of seeing the portion where they're drawing and also the bigger picture)<br>
+4 - Aplying a colorpicker to choose current/new pixel color<br>
+5 - Aplying a drag bar to choosie current/new pixel size <br>
+6 - Aplying design with <a href="https://github.com/whitesmith/qnorr" >qnorr </a> <br>
+7 - Trying to apply a different marker <br>
+8 - Saving the drawing to be able to continue on another session<br>
 
 
 ===================================================================================================================
