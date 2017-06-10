@@ -72,7 +72,7 @@ navigator.getUserMedia({
 }, successCallback, errorCallback);
 
 
-/*----------- SWITCH CAM BUTTON ----------- */
+/*----------- STOP CAM BUTTON ----------- */
 
 $('.toggle').click(function () {
     play = !play;
@@ -108,7 +108,7 @@ var nextWebCam = function () {
   
     document.getElementById('switch').disabled = true;
     if (currentCam !== null) {
-        currentCam++;
+        currentCam=2;
 
         if (currentCam >= webcamList.length) {
             currentCam = 0;
