@@ -213,24 +213,15 @@ function CanvasState(canvas) {
     canvas.addEventListener('mouseup', function (e) {
         myState.dragging = false;
     }, true);
-    // double click for making new shapes
-
+    
     changeColor();
-    //changeSize();
+ 
+// double click for making new shapes
 
     canvas.addEventListener('dblclick', function (ev) {
 
         myState.addShape(new Shape(ev.clientX, ev.clientY, tam, tam, color));
-        console.log("o tamanho é " + tam);
-        console.log("a cor é " + color);
-
-        myState.addShape(new Shape(nx, ny, 50, 50, 'rgba(255, 0, 255, 0.6)'));
-
-
-
-
-
-    }, true);
+ }, true);
 
 
     // **** Options! ****
