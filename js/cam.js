@@ -108,7 +108,8 @@ var nextWebCam = function () {
   
     document.getElementById('switch').disabled = true;
     if (currentCam !== null) {
-        currentCam=2;
+        currentCam++;
+        console.log("o nº da camera é "+currentCam);
 
         if (currentCam >= webcamList.length) {
             currentCam = 0;
