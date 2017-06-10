@@ -76,3 +76,9 @@ Selecting canvas elements
 <a href="https://simonsarris.com/making-html5-canvas-useful/"> A Gentle Introduction to Making HTML5 Canvas Interactive</a>
 <br>
 
+
+Drag Bar
+================
+<a href="http://webtutsdepot.com/2010/04/24/html-5-slider-input-tutorial/">HTML 5 Slider Bar Tutorial</a>
+<br>
+http://www.sitepoint.com/forums/showthread.php?623011-Drag-bar-to-modify-CSS-input-value
