@@ -1,4 +1,4 @@
-console.log("cam in");
+ 
 
 canvas_state = new CanvasState(document.getElementById('canvas'));
 
@@ -31,6 +31,8 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 }
 
 
+//inicializing the switch button to false, so it doesn't happen if the device only has 1 camera
+
 document.getElementById('switch').addEventListener('click', nextWebCam, false);
 
 
@@ -48,7 +50,7 @@ function successCallback(stream) {
     }
     video.onloadedmetadata = function (e) {
         video.play();
-        console.log("há"+webcamList.length+" cameras");
+        
     }
 
     if (webcamList.length > 1) {
@@ -60,16 +62,26 @@ function successCallback(stream) {
 
 }
 
+
+function errorCallback(error) {}
+
+
+navigator.getUserMedia({
+    video: true
+
+}, successCallback, errorCallback);
+
+
 /*----------- SWITCH CAM BUTTON ----------- */
 
 $('.toggle').click(function () {
-    batata = !batata;
+    play = !play;
 
 
-    if (batata == true) {
+    if (play == true) {
         $('.toggle').html("Play");
         video.onloadedmetadata = video.pause();
-        //console.log("pause");
+        
 
     } else {
         $('.toggle').html("Pause");
@@ -83,13 +95,6 @@ $('.toggle').click(function () {
 
 
 
-function errorCallback(error) {}
-
-
-navigator.getUserMedia({
-    video: true
-
-}, successCallback, errorCallback);
 
 
 
@@ -100,7 +105,7 @@ navigator.getUserMedia({
 // 2. Call getUserMedia() to access the next webcam
 
 var nextWebCam = function () {
-    console.log("lista tem " + webcamList.length);
+  
     document.getElementById('switch').disabled = true;
     if (currentCam !== null) {
         currentCam++;
@@ -120,7 +125,7 @@ var nextWebCam = function () {
         }
     } else {
         currentCam = 0;
-        console.log("A lista " + webcamList.length);
+        console.log("esta lista tem agora  " + webcamList.length); 
     }
 
     navigator.mediaDevices.getUserMedia({
@@ -128,7 +133,7 @@ var nextWebCam = function () {
             video: {
                 width: 1280,
                 height: 720,
-                // console.log("A lista " + webcamList.length);
+              
                 deviceId: {
                     exact: webcamList[currentCam]
                 }
@@ -162,8 +167,8 @@ var deviceChanged = function () {
 // 5. Register event listener (devicechange) to respond to device plugin or unplug
 
 var devicesCallback = function (devices) {
+    
     // Identify all webcams
-    console.log("neste momento, a lista tem " + webcamList.length);
     for (var i = 0; i < devices.length; i++) {
         if (devices[i].kind === 'videoinput') {
             webcamList[webcamList.length] = devices[i].deviceId;
@@ -173,7 +178,7 @@ var devicesCallback = function (devices) {
 
     if (webcamList.length > 0) {
 
-        console.log("temos " + webcamList.length);
+      
         // Start video with the first device on the list
         nextWebCam();
         if (webcamList.length > 1) {
@@ -189,9 +194,6 @@ var devicesCallback = function (devices) {
 
 
 navigator.mediaDevices.enumerateDevices().then(devicesCallback);
-
-/*----------- CREATING AR ELEMENT AND RECOGNIZING MARKER ----------- */
-
 
 detector = new AR.Detector();
 
