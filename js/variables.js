@@ -10,6 +10,9 @@ var play = false;
 var camera, canvas, context, imageData, pixels, detector;
 
 var c = "",
+    color="#ffffff",
+    size=25,
+    tam=25,
     n = "",
     ArEL = "",
     k = "",

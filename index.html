@@ -23,8 +23,9 @@
 <body>
 
 
-    <div style="margin: 10px;"><strong> WHITESMITH AR WALL</strong></div>
-
+    
+    <!--  — — — — — — — — — — — — — CANVAS — — — — — — — — — — — — — -->
+   
     <canvas id="canvas" class="video__canvas" style=" width: 960px; height:720px;  ">
 
         This text is displayed if your browser does not support HTML5 Canvas.
@@ -34,17 +35,24 @@
  
     <!--  — — — — — — — — — — — — — VIDEO ELEMENT — — — — — — — — — — — — — -->
     <video id="video" autoplay="true" style="width:960px; height:720px; display:none"></video>
+    
+   <!--  — — — — — — — — — — — — — CONTROLS — — — — — — — — — — — — — -->
+ 
+<!-- Pixel Color -->
+   
+    <input id="chosenColor" type="text" data-wheelcolorpicker/>
+  
+<!-- Pixel Size -->  
+   
+    <input  class="js-size-handler" type="range" min="0" max="100" value="25" step="5"   />
+<span id="range" class="js-display-value">25</span>
 
-    <!--  — — — — — — — — — — — — — CONTROLS — — — — — — — — — — — — — -->
+ 
 
-   <!-- <input id="chosenColor" type="text" data-wheelcolorpicker/>
--->
+ <!-- Camera controls -->  
     <button class="btn btn-default" type="button" disabled id="switch"> Switch Cameras </button>
 
     <button type="button" class="toggle"> Pause </button>
-
-
-
 
 
 
@@ -60,9 +68,6 @@
 
     <!--  — — — — — — — — — — — — — MY JS FILES — — — — — — — — — — — — — -->
 
-  
-    <!--   <script type="text/javascript" src="js/all.js"></script>-->
-   
 
    <script type="text/javascript" src="js/variables.js"></script>
     <script type="text/javascript" src="js/interactivity.js">
