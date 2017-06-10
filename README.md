@@ -4,6 +4,7 @@ WS INTERACTIVE INSTALATION WALL
 The purpose of this repo is to create a canvas inside an AR element.
 Once that is possible, there will be several AR markers with a separate canvas in each one, so that together they make a huge canvas in which people can interact and play.
 <br>
+<b>This only works on Chrome </b>
 
 Current state
 ================================
@@ -32,7 +33,7 @@ This project was made up by studying several Js Libraries and online tutorials.
 
 JSAruco
 ========
-<a  href="https://github.com/jcmellado/js-aruco"></a>
+<a  href="https://github.com/jcmellado/js-aruco"> Github repo for JsARuco</a>
 <br>
 
 JsARToolkit
@@ -68,3 +69,10 @@ Color Picker
 ================
 <a href="http://files.jar2.net/jquery/wheelcolorpicker/example-v3/example.html"> Wheel Color Picker</a>
 <br>
+
+
+Selecting canvas elements
+================
+<a href="https://simonsarris.com/making-html5-canvas-useful/"> A Gentle Introduction to Making HTML5 Canvas Interactive</a>
+<br>
+
