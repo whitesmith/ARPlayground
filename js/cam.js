@@ -54,9 +54,9 @@ function successCallback(stream) {
     }
 
     if (webcamList.length > 1) {
-        console.log(" > 1 ");
+      
         document.getElementById('switch').disabled = false; //If more than 1 cam, enable switch button
-        console.log(">1");
+       
     }
 
 
